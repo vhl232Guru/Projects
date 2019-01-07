@@ -13,14 +13,23 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
+import org.testng.annotations.*;
 
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
+
+/*Verify the product review mechanism.
+1. Go to http://live.guru99.com
+2. Go to link http://live.guru99.com/index.php/review/product/list/id/1/
+3. Fill the required review and submit it.
+4. Go to http://live.guru99.com/index.php/backendlogin
+5. Login with credentials provided.
+6. Go to Catalogue--> Reviews and Ratings --> Customer Reviews --> Pending Reviews Menu.
+7. Sort table by id and select comment then click on Edit link.
+8. Change status to "Approved" and click "Save Review".
+9. Go to http://live.guru99.com. Click Mobile Menu.
+10.Click on Sony Xperia image.
+11.In detail page click on Review tab at bottom page.
+12.Verify The Review comment is shown -->Review is approved and shown.
+ */
 
 public class VerifyReview {
     WebDriver driver;
@@ -29,11 +38,14 @@ public class VerifyReview {
     WebDriverWait wait;
     MadgentoAdminPanelPage madgentoAdminPanelPage;
     Select select;
+    GuruUTILS guruUTILS = new GuruUTILS();
 
-    @BeforeTest
+
+    @BeforeClass
     public void setProPeTies(){
-        System.setProperty(GuruUTILS.instanceChromeDriver, GuruUTILS.locationWebDriverChrom);
-        driver = new ChromeDriver();
+        //System.setProperty(GuruUTILS.instanceChromeDriver, GuruUTILS.locationWebDriverChrom);
+        //driver = new ChromeDriver();
+        driver = guruUTILS.setProp("Chrome");
         driver.get("http://live.guru99.com");
         wait = new WebDriverWait(driver,10);
         actions = new Actions(driver);
@@ -53,7 +65,7 @@ public class VerifyReview {
         reviewPageSony.getButtonReview().submit();
     }
     @Test(dataProvider = "logIn",dataProviderClass = GuruUTILS.class)
-    public void logInbackendlogin(String id,String pass) throws AWTException {
+    public void logInbackendlogin(String id,String pass)  {
         driver.get(GuruUTILS.urlbackendlogin);
         GuruUTILS.logIn(id,pass,driver);
         madgentoAdminPanelPage = new MadgentoAdminPanelPage(driver);
@@ -85,6 +97,12 @@ public class VerifyReview {
         String verufyTextReview = "REVIEW BY SERIISLON";
         Assert.assertEquals(text_review,verufyTextReview);
     }
+
+    @AfterClass
+    public void close(){
+        driver.quit();
+    }
+
 
 
     //get data from first cell

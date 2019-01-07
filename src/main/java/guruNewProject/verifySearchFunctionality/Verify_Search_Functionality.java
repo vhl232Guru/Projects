@@ -8,6 +8,19 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+/*
+Verify Search Functionality
+1.Go to http://live.guru99.com/index.php
+2.Click on Advance Search
+3.In Price field enter range 0-150. Click Search.
+4.Note the Price and Product Name in the result.Print on Console.
+    --> Product name and price are fetched and displayed on console.
+5.Again, In the Price field enter range 151-1000. Click Search.
+6.Note the Price and Product Name in the result.
+5.Again, In the Price field enter range 151-1000. Click Search. Print on Console.
+    -->Product name and price are fetched and displayed on console.
+ */
+
 public class Verify_Search_Functionality {
     WebDriver driver;
     GuruMainPage guruMainPage;

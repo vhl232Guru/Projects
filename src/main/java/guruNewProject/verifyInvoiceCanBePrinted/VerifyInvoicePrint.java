@@ -12,13 +12,21 @@
  import org.openqa.selenium.support.ui.Select;
  import org.openqa.selenium.support.ui.WebDriverWait;
  import org.testng.Assert;
- import org.testng.annotations.BeforeTest;
- import org.testng.annotations.DataProvider;
- import org.testng.annotations.Test;
-
- import java.awt.*;
- import java.awt.event.InputEvent;
+ import org.testng.annotations.*;
  import java.io.File;
+
+ //Verify invoices can be printed:
+ // 1.Go to http://live.guru99.com/index.php/backendlogin.
+ // 2.Login credentials provided.
+ // 3.Go to seles --> Orders menu.
+ // 4.In the status field select "Canceled" .Click search.
+ // 5.Select the checkbox next to first order.
+ // 6.In Actions, select "Print invoices".Click Submit.
+ // 7.Verify the error message. --> Error message:"The are no printable documents related to selected orders" is shown.
+ // 8.In the status field select "Complete". Click search.
+ // 9.Select the checkbox next to first order.
+ // 10.In Actions, select "Print invoices".Click Submit.
+ // 11.Verify the invoice is downloaded.--> Invoice is downloaded.
 
  public class VerifyInvoicePrint {
 
@@ -27,7 +35,7 @@
      Select select;
      MadgentoAdminPanelPage madgentoAdminPanelPage;
 
-    @BeforeTest
+    @BeforeClass
      public void setProperty()  {
         System.setProperty(GuruUTILS.instanceChromeDriver, GuruUTILS.locationWebDriverChrom);
         driver = new ChromeDriver();
@@ -38,7 +46,7 @@
     }
 
     @Test(dataProvider ="logIn",dataProviderClass = GuruUTILS.class, priority = 0)
-     public void logIn(String id,String pass) throws AWTException {
+     public void logIn(String id,String pass)  {
        GuruUTILS.logIn(id,pass,driver);
     }
 
@@ -91,9 +99,30 @@
 
     @Test(priority = 8)
     public void checkExtitFile(){
-        String fileName = "C:\\Users\\Павел\\Downloads\\invoice2018-12-20_15-20-01.pdf";
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+       // System.out.println(fileName);
+        //Assert.assertEquals((new File(fileName)).isFile(),true);*/
+       File catal = new File("C:\\Users\\Pavel\\Downloads");
+        System.out.println(catal.isDirectory());
+        boolean invoinceFile;
+        for (File nameFile:catal.listFiles()) {
+            if(nameFile.isFile()&&(invoinceFile = nameFile.getName().startsWith("invoice"))){
+                Assert.assertTrue(invoinceFile);
+                System.out.println("File is exist!");
+                break;
+            }
+            else System.out.println("File not exist!");
+        }
 
-        Assert.assertEquals((new File(fileName)).isFile(),true);
+    }
+
+    @AfterClass
+     public void close(){
+        driver.quit();
     }
 
 

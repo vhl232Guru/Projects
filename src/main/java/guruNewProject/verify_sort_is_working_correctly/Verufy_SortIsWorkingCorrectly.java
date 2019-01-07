@@ -8,12 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
+import org.testng.annotations.*;
 
-import java.awt.*;
+/*
+Verify Sort is working correctly
+1.Go to http://live.guru99.com/index.php/backendlogin
+2.Login with credentials provided.
+3.Go to Sales invoice.
+4.Sort Invoice Data Column in ascending and descending order.
+5.Verify the sort working as expected. --> Sort functionality works as expected.
+ */
+
 
 public class Verufy_SortIsWorkingCorrectly {
 
@@ -21,7 +26,7 @@ public class Verufy_SortIsWorkingCorrectly {
     MadgentoAdminPanelPage madgentoAdminPanelPage;
     Actions actions;
     Action action;
-    @BeforeTest
+    @BeforeClass
     public void setSystem(){
         System.setProperty(GuruUTILS.instanceChromeDriver,GuruUTILS.locationWebDriverChrom);
         driver = new ChromeDriver();
@@ -31,11 +36,7 @@ public class Verufy_SortIsWorkingCorrectly {
 
     @Test(dataProvider = "logIn",dataProviderClass = GuruUTILS.class)
     public void log_in(String id,String pass){
-        try {
             GuruUTILS.logIn(id,pass,driver);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -62,7 +63,7 @@ public class Verufy_SortIsWorkingCorrectly {
             +"Table sort ascending order");
 
     }
-    @AfterTest
+    @AfterClass
     public void close(){
         driver.quit();
     }

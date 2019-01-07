@@ -1,7 +1,11 @@
 package guruNewProject;
 
 import guruNewProject.pages.LoginPage;
+import guruNewProject.pages.MadgentoAdminPanelPage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.testng.annotations.DataProvider;
 
 import java.awt.*;
@@ -14,27 +18,46 @@ public class GuruUTILS {
     public static String instanceChromeDriver;
     public static String urlbackendlogin;
     public static String urlGuruMainPage;
+     WebDriver driver;
     static {
-        locationWebDriverChrom = "F:\\hachik NE TROGAT\\test\\selenium drivera" +
+        locationWebDriverChrom = "F:\\selenium drivera" +
                 "\\ChromeDriver\\chromedriver_win32\\chromedriver.exe";
-        //locationWebDriver = "E:\\Java\\chromedriver.exe";
         instanceChromeDriver = "webdriver.chrome.driver";
         urlbackendlogin = "http://live.guru99.com/index.php/backendlogin";
         urlGuruMainPage = "http://live.guru99.com/index.php";
     }
 
-    /*public void setProp(WebDriver driver,String locationWebdriver,String instanceDriver, String url){
-        System.getProperty(instanceDriver,locationWebdriver);
-        driver = new ChromeDriver();
-        driver.get(url);
-    }*/
+    public WebDriver setProp(String browserType){
+        switch (browserType){
+            case"Chrome":
+                System.setProperty("webdriver.chrome.driver","F:\\selenium drivera" +
+                        "\\ChromeDriver\\chromedriver_win32\\chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+            case "Firefox":
+                System.setProperty("webdriver.gecko.driver","F:\\selenium drivera" +
+                        "\\Mozilla GeckoDriver\\geckodriver.exe");
+                 driver = new FirefoxDriver();
+                 break;
+            case "Opera":
+                System.setProperty("webdriver.opera.driver","F:\\selenium drivera" +
+                        "\\Opera\\operadriver.exe");
+                 driver = new OperaDriver();
 
-    public static void logIn(String id,String pass,WebDriver driver) throws AWTException {
+        }
+         return driver;
+    }
+
+
+    public static void logIn(String id,String pass,WebDriver driver)  {
         LoginPage loginPage;
         loginPage = new LoginPage(driver);
         loginPage.getUserNameField().sendKeys(id);
         loginPage.loginField.sendKeys(pass);
         loginPage.getLoginButton().click();
+        MadgentoAdminPanelPage madgentoAdminPanelPage = new MadgentoAdminPanelPage(driver);
+        madgentoAdminPanelPage.getClose_POP_UP_WINDOW().click();
+
         //closePopUp();
     }
 
@@ -45,7 +68,7 @@ public class GuruUTILS {
         return new Object[][]{{"user01","guru99com"}};
     }
 
-    //close pop up
+    //close popup
     public static void closePopUp() throws AWTException {
         Robot robot = new Robot();
         robot.mouseMove(701,426);

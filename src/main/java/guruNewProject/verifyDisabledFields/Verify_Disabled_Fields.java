@@ -9,11 +9,23 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-import java.awt.*;
+/*
+Verify disabled fields.
+1.Go to http://live.guru99.com/index.php/backendlogin
+2.Login with credentials provided.
+3.Go to Customers --> Manage Customers menu.
+4.Open any customer's detail by clicking on view link in the grid.
+5.Click on "Account Information" tab for the customer's detail page.
+     --> "Associate to Website" and "Created from" controls should be disabled.
+6.Verify disabled fields.
+7.Verify blank fields.
+     --> New Password field should bee blank.
+ */
 
 public class Verify_Disabled_Fields {
     WebDriver driver;
@@ -31,12 +43,10 @@ public class Verify_Disabled_Fields {
 
     @Test(dataProvider = "logIn",dataProviderClass = GuruUTILS.class)
     public void log_in(String id,String pass){
-        try {
+
             GuruUTILS.logIn(id, pass, driver);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        driver.findElement(By.xpath("//*[@id=\"message-popup-window\"]/div[1]/a/span")).click();
+
+        // driver.findElement(By.xpath("//*[@id=\"message-popup-window\"]/div[1]/a/span")).click();
     }
     @Test
     public void open_custumers_details(){
@@ -65,5 +75,9 @@ public class Verify_Disabled_Fields {
         Boolean passField = pass_Field.isEmpty();
         Assert.assertTrue(passField);
 
+    }
+    @AfterClass
+    public void close(){
+        driver.quit();
     }
 }
