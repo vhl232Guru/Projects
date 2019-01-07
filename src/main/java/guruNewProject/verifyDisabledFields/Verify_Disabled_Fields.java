@@ -64,11 +64,11 @@ public class Verify_Disabled_Fields {
     public void verify_Disabled_Fields(){
         madgentoAdminPanelPage.getAccaunt_Information_Button().click();
         Boolean assocateToWeb = madgentoAdminPanelPage.getAssociate_To_WebSite_Field().isEnabled();
-        Boolean crestedFrom = madgentoAdminPanelPage.getCreated_From_Field().isEnabled();
-        System.out.println(assocateToWeb + " " + crestedFrom);
+        Boolean createdFrom = madgentoAdminPanelPage.getCreated_From_Field().isEnabled();
+        System.out.println(assocateToWeb + " " + createdFrom);
 
         Assert.assertFalse(assocateToWeb);
-        Assert.assertFalse(crestedFrom);
+        Assert.assertFalse(createdFrom);
 
 
         String pass_Field  = madgentoAdminPanelPage.getNew_Password_Field().getAttribute("value");
