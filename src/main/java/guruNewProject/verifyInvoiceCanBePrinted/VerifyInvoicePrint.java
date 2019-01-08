@@ -34,11 +34,11 @@
      WebDriverWait wait;
      Select select;
      MadgentoAdminPanelPage madgentoAdminPanelPage;
+     GuruUTILS guruUTILS = new GuruUTILS();
 
     @BeforeClass
      public void setProperty()  {
-        System.setProperty(GuruUTILS.instanceChromeDriver, GuruUTILS.locationWebDriverChrom);
-        driver = new ChromeDriver();
+        driver = guruUTILS.setProp("Chrome");
         driver.get(GuruUTILS.urlbackendlogin);
         madgentoAdminPanelPage  = new MadgentoAdminPanelPage(driver);
         wait = new WebDriverWait(driver,10);
@@ -104,8 +104,7 @@
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-       // System.out.println(fileName);
-        //Assert.assertEquals((new File(fileName)).isFile(),true);*/
+
        File catal = new File("C:\\Users\\Pavel\\Downloads");
         System.out.println(catal.isDirectory());
         boolean invoinceFile;
@@ -117,6 +116,7 @@
             }
             else System.out.println("File not exist!");
         }
+
 
     }
 

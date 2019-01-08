@@ -24,11 +24,11 @@ Verify Search Functionality
 public class Verify_Search_Functionality {
     WebDriver driver;
     GuruMainPage guruMainPage;
+    GuruUTILS guruUTILS = new GuruUTILS();
 
     @BeforeClass
     public void setSyst(){
-        System.setProperty(GuruUTILS.instanceChromeDriver,GuruUTILS.locationWebDriverChrom);
-        driver = new ChromeDriver();
+        driver = guruUTILS.setProp("Chrome");
         driver.get(GuruUTILS.urlGuruMainPage);
     }
 

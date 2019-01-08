@@ -32,11 +32,11 @@ public class Verify_Disabled_Fields {
     Actions actions;
     Action action;
     MadgentoAdminPanelPage madgentoAdminPanelPage;
+    GuruUTILS guruUTILS = new GuruUTILS();
 
     @BeforeClass
     public void set_Properties(){
-        System.setProperty(GuruUTILS.instanceChromeDriver,GuruUTILS.locationWebDriverChrom);
-        driver = new ChromeDriver();
+        driver = guruUTILS.setProp("Chrome");
         driver.get(GuruUTILS.urlbackendlogin);
 
     }

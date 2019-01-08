@@ -26,10 +26,11 @@ public class Verufy_SortIsWorkingCorrectly {
     MadgentoAdminPanelPage madgentoAdminPanelPage;
     Actions actions;
     Action action;
+    GuruUTILS guruUTILS = new GuruUTILS();
+
     @BeforeClass
     public void setSystem(){
-        System.setProperty(GuruUTILS.instanceChromeDriver,GuruUTILS.locationWebDriverChrom);
-        driver = new ChromeDriver();
+        driver = guruUTILS.setProp("Chrome");
         driver.get(GuruUTILS.urlbackendlogin);
         actions = new Actions(driver);
     }
